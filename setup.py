@@ -16,6 +16,7 @@ setup(name="DsaCheck",
 DsaCheck checks if your Debian system is up to date according to DSA security advisories.""",
 
       url = "http://code.google.com/p/dsacheck",
+      install_requires=['DsaLib', 'DebLib'],
       packages = find_packages(exclude=['tests','ez_setup']),
       scripts = ["dsaCheck", ],
       entry_points = {
