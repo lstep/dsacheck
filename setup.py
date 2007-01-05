@@ -2,10 +2,10 @@ from ez_setup import use_setuptools
 use_setuptools()
 from setuptools import setup, find_packages
 
-import deblib
+from deblib import __version__ as VERSION
 
 setup(name="DebLib",
-      version=deblib.__version__,
+      version=VERSION,
       author = "Adelux",
       author_email = "luc stepniewski at adelux.fr",
       download_url = "http://code.google.com/p/deblib",
@@ -18,12 +18,13 @@ For example, it allows you to ask if a specific version of a package exist on th
 deblib has been created to facilitate the development of the dsacheck project.""",
 
       url = "http://code.google.com/p/deblib",
-      zip_safe = True,
       packages = find_packages(exclude=['tests','ez_setup']),
-      package_data = {
-        # Include all that is in data/
-        'deblib' : ['data/*.txt'],
-      },
+      scripts = ["dsaCheck", ],
+      entry_points = {
+          'console_scripts': [
+              'dsaCheck = dsacheck.dsacheck:main'
+            ]
+          },
 
       classifiers = [
         'Development Status :: 4 - Beta',
