@@ -1,6 +1,6 @@
 # -*- coding: latin-1 -*-
 """
-Copyright (C) 2005 Adelux & Saur <contact@adelux.fr>
+Copyright (C) 2007 Adelux <contact@adelux.fr>
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 from deblib import deblib
 from dsalib import dsalib
 
-if __name__ == '__main__':
+def main():
     dsaBase = dsalib.DSABase()
     dsaBase.update_base()
 
@@ -32,3 +32,5 @@ if __name__ == '__main__':
                 version = p.find_package(package)
                 print '%s is an old version (%s), %s is available.' % (package,version,package_version)
 
+if __name__ == '__main__':
+    main()
