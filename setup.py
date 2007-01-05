@@ -4,20 +4,18 @@ from setuptools import setup, find_packages
 
 from dsacheck import __version__ as VERSION
 
-setup(name="DebLib",
+setup(name="DsaCheck",
       version=VERSION,
       author = "Adelux",
       author_email = "luc stepniewski at adelux.fr",
-      download_url = "http://code.google.com/p/deblib",
+      download_url = "http://code.google.com/p/dsacheck",
       license = "GPL",
       keywords = "debian deb python packages dpkg",
-      description = "Module to easily access/search Debian packages",
+      description = "DsaCheck checks if your Debian system is up to date according to DSA security advisories.",
       long_description = """
-deblib is a simple module for Python that allows you to look at the debian packages database.
-For example, it allows you to ask if a specific version of a package exist on the tested system.
-deblib has been created to facilitate the development of the dsacheck project.""",
+DsaCheck checks if your Debian system is up to date according to DSA security advisories.""",
 
-      url = "http://code.google.com/p/deblib",
+      url = "http://code.google.com/p/dsacheck",
       packages = find_packages(exclude=['tests','ez_setup']),
       scripts = ["dsaCheck", ],
       entry_points = {
