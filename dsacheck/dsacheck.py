@@ -18,8 +18,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
 from deblib import deblib
 from dsalib import dsalib
+import sys
 
 def main():
+    return_code = 0
     dsaBase = dsalib.DSABase()
     dsaBase.update_base()
 
@@ -28,9 +30,11 @@ def main():
     for advisory,e in dsaBase.dsa_advisories.items():
         for package_version in e['fixedIn']:
             if p.is_installed('<'+package_version):
+                return_code = 1
                 package = package_version.split('_',2)[0]
                 version = p.find_package(package)
                 print '%s is an old version (%s), %s is available.' % (package,version,package_version)
+    sys.exit(return_code)
 
 if __name__ == '__main__':
     main()
