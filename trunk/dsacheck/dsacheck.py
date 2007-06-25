@@ -18,10 +18,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
 from deblib import deblib
 from dsalib import dsalib
-import sys
+import sys,os,ConfigParser
+
+
+default_conf ="""\
+[main]
+# Put here some packages names without the version 
+# to not be reported, separated by a ','
+packages_exceptions =
+
+"""
 
 def main():
+    conf_path = '/etc/dsacheck.conf'
     return_code = 0
+
+    if not os.path.exists(conf_path):
+        print "Configuration file not present, creating it"
+        file(conf_path,'w').write(default_conf)
+
+    config = ConfigParser.read(conf_path)
+    exceptions = config.read('main','packages_exceptions').split(',')
+
     dsaBase = dsalib.DSABase()
     dsaBase.update_base()
 
@@ -30,10 +48,11 @@ def main():
     for advisory,e in dsaBase.dsa_advisories.items():
         for package_version in e['fixedIn']:
             if p.is_installed('<'+package_version):
-                return_code = 1
                 package = package_version.split('_',2)[0]
-                version = p.find_package(package)
-                print '%s is an old version (%s), %s is available.' % (package,version,package_version)
+                if package not in exceptions:
+                    return_code = 1
+                    version = p.find_package(package)
+                    print '%s is an old version (%s), %s is available.' % (package,version,package_version)
     sys.exit(return_code)
 
 if __name__ == '__main__':
