@@ -23,7 +23,7 @@ import sys,os,ConfigParser
 
 default_conf ="""\
 [main]
-# Put here some packages names without the version 
+# Put here some packages names without the version
 # to not be reported, separated by a ','
 packages_exceptions =
 
@@ -35,10 +35,13 @@ def main():
 
     if not os.path.exists(conf_path):
         print "Configuration file not present, creating it"
-        file(conf_path,'w').write(default_conf)
+        f=open(conf_path,'w')
+        f.write(default_conf)
+        f.close()
 
-    config = ConfigParser.read(conf_path)
-    exceptions = config.read('main','packages_exceptions').split(',')
+    conf = ConfigParser.ConfigParser()
+    conf.read(conf_path)
+    exceptions = conf.get('main','packages_exceptions') .split(',')
 
     dsaBase = dsalib.DSABase()
     dsaBase.update_base()
